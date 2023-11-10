@@ -2,7 +2,7 @@
 
 # ggScatRidges: Scatter combined to Ridgeline plots in ggplot2
 
-THIS FUNCTION IS UNDER ACTIVE DEVELOPMENT. TRY AT YOUR OWN RISK IF YOOU REALLY WANT TO, THERWISE WAIT UNTIL A STABLE VERSION IS PUBLISHED
+THIS FUNCTION IS UNDER ACTIVE DEVELOPMENT. TRY AT YOUR OWN RISK IF YOU REALLY WANT TO, OTHERWISE WAIT UNTIL A STABLE VERSION IS PUBLISHED.
 
 ggScatRidges is a simple function combining a scatter plot to a ridgeline plot to visualise the disparities of the data points.
 

@@ -1,18 +1,17 @@
 #' Scatter plot combine with ridge lines
 #'
-#' @param DF The input data. A dataframe can be used for this function, the dataframe should contain two columns used as input data and an other column describing the grouping.
-#' @param X The input data. If a dataframe was provided, the user can indicate here  If no dataframe was supplied, a X vector should be set as an input. The vector should contain numerical values.
-#' @param Y The input data. If no dataframe was supplied, a Y vector should be set as an input along with a X vector. The vector should contain numerical values.
-#' @param Y The input data. If no dataframe was supplied, a Y vector should be set as an input along with a X vector. The vector should contain numerical values.
-#' @param xlab. A title for the xlab can be given here.
-#' @param ylab. A title for the ylab can be given here.
-#' @param title. A title for the plot can be given here.
-#' @param xlim. Set scale limits on the xaxis. 
-#' @param ylim. Set scale limits on the yaxis.
+#' @param x as input data. If a dataframe was provided, the dataframe should contain no less than three columns.  If no dataframe was supplied, a x vector should be set as an input. The vector should contain numerical values.
+#' @param y as input data if . If no dataframe was supplied, a y vector should be set as an input along with a x vector. The vector should contain numerical values.
+#' @param xlab to give a title for the xlab can be given here.
+#' @param ylab to give a title for the ylab can be given here.
+#' @param title to give a title for the plot can be given here.
+#' @param xlim to set scale limits on the xaxis. 
+#' @param ylim to set scale limits on the yaxis.
 #' @param group
 #' @param color The user can choose from 
-#' @param ridges. The user can choose to plot or not the ridgelines. Default = FALSE.
-#' @param size. The overall size of the text in the plot.
+#' @param ridges The user can choose to plot or not the ridgelines. Default = TRUE.
+#' @param size The overall size of the text in the plot. Default = 15.
+#' @param draw if the user wants to directly draw the plot. Default = TRUE.
 #' @import ggplot2
 #' @import cowplot
 #' @import ggpubr
@@ -40,7 +39,7 @@ ggScatRidges <- function(x,
                          group = NULL,
                          color = "lancet",
                          ridges = TRUE,
-                         size = NULL,
+                         size = 15,
                          draw = TRUE){
   
 
@@ -56,8 +55,8 @@ ggScatRidges <- function(x,
     if(!inherits(y, c("double", "numeric"))){
       stop("The y vector to be plotted should contain only numeric values")
     }
-    }else if(ncol(x) != 2){
-      stop("if 'x' is a tabular data, it should have two columns, first will be used as x axis and second columns will be used as the y axis.")
+    }else if(ncol(x) != 3){
+      stop("if 'x' is a tabular data, it should have three columns, first will be used as x axis and the second column will be used as the y axis. The third column will be used for grouping")
     }else{
       y <- x[[2]]
       x <- x[[1]]
@@ -77,7 +76,8 @@ ggScatRidges <- function(x,
       stop("The value of the 'x' argument should have the same length as value of 'y' argument.")
     }
   
-  ### main 
+
+# Main --------------------------------------------------------------------
   if(ridges){
     main_plot <- ggplot(mapping = aes(x = x, y = y, col = group)) +
       geom_point() +
@@ -132,7 +132,11 @@ ggScatRidges <- function(x,
 
 
 
+library(ggScatRidges)
 
+ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 
+             color = "lancet", ridges = T, title = "plot iris",
+             xlab = "Sepal.Length", ylab = "Sepal.Width", size = 15, draw = T) 
 
 
 

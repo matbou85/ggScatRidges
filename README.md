@@ -32,7 +32,6 @@ remotes::install_github("matbou85/ggScatRidges")
 ## Usage
 
 ``` r
-<<<<<<< HEAD
 library(ggScatRidges)
     
 ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 

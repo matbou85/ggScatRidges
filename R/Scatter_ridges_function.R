@@ -79,7 +79,7 @@ ggScatRidges <- function(x,
   
   ### main 
   if(ridges){
-    pmain <- ggplot(mapping = aes(x = x, y = y, col = group)) +
+    main_plot <- ggplot(mapping = aes(x = x, y = y, col = group)) +
       geom_point() +
       xlab(xlab) +
       ylab(ylab) +
@@ -91,16 +91,16 @@ ggScatRidges <- function(x,
       ggtitle(title) +
       geom_density2d()
     
-    xdens <- suppressMessages({
-      axis_canvas(pmain, axis = "x") +
+    xridges <- suppressMessages({
+      axis_canvas(main_plot, axis = "x") +
       geom_density_ridges(mapping = aes(x = x, y = group, fill = group),
                           alpha = 0.7, size = 0.2) +
       ggpubr::fill_palette(color) +
       ggplot2::scale_y_discrete(expand = c(0, 0))
       })
     
-    ydens <- suppressMessages({
-      axis_canvas(pmain, axis = "y", coord_flip = TRUE)+
+    yridges <- suppressMessages({
+      axis_canvas(main_plot, axis = "y", coord_flip = TRUE)+
       geom_density_ridges(mapping = aes(x = y, y = group, fill = group),
                           alpha = 0.7, size = 0.2) +
       scale_y_discrete(expand = c(0, 0)) +
@@ -108,8 +108,8 @@ ggScatRidges <- function(x,
       ggpubr::fill_palette(color)
     })
     
-    p1 <- cowplot::insert_xaxis_grob(pmain, xdens, grid::unit(.2, "null"), position = "top")
-    final <- cowplot::insert_yaxis_grob(p1, ydens, grid::unit(.2, "null"), position = "right")
+    p1 <- cowplot::insert_xaxis_grob(plot = main_plot, grob = xridges, height = grid::unit(.2, "null"), position = "top")
+    final <- cowplot::insert_yaxis_grob(plot = p1, grob = yridges, height = grid::unit(.2, "null"), position = "right")
 
   } else {
     final <- ggplot(mapping = aes(x = x, y = y, col = group)) +

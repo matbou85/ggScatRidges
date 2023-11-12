@@ -8,7 +8,7 @@
 
 `ggScatRidges` is a simple function combining a scatter plot to a ridgeline plot to visualise the disparities of the data points. This helps visualising the distribution of different groups in the data.
 
-![An example of a plot that this package generates](misc/img/Rplot01.png)
+![An example of a plot that this package generates](misc/img/Rplot_01.png)
 
 ## Installation
 
@@ -38,14 +38,4 @@ library(ggScatRidges)
 ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 
                     color = "lancet", ridges = T, title = "plot iris",
                     xlab = "Sepal.Length", ylab = "Sepal.Width", size = 25, draw = T) 
-
-=======
-library("ggScatRidges")
-
-plot <- ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species,
-                    color = "lancet", ridges = T, title = "plot iris",
-                    xlab = "xlab", ylab = "ylab", size = 25, draw = T)
-
-ggdraw(plot)
->>>>>>> 5abb6b734ed0ce4cd734d41f21ba28831b7e4a86
 ```

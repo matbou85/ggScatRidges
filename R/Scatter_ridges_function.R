@@ -14,7 +14,12 @@
 #' @param ridges. The user can choose to plot or not the ridgelines. Default = FALSE.
 #' @param size. The overall size of the text in the plot.
 #' @import ggplot2
-#' @export
+#' @import cowplot
+#' @import ggpubr
+#' @import ggridges
+#' @import viridis
+#' @import hrbrthemes
+#' @export 
 
 
 library("ggplot2")
@@ -118,18 +123,15 @@ ggScatRidges <- function(x,
       geom_density2d()
   }
   
-  return(invisible(final))
-  # if(draw){
-  #   cowplot::draw_plot(final)
-  # }
+  if(draw){
+    ggdraw(final)
+  }else{
+    return(invisible(final))
+  }
 }
 
 
-plot <- ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 
-                    color = "lancet", ridges = T, title = "plot iris",
-                    xlab = "xlab", ylab = "ylab", size = 25, draw = T) 
 
-ggdraw(plot)
 
 
 

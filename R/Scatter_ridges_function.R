@@ -35,7 +35,7 @@ ggScatRidges <- function(x,
                          group = NULL,
                          color = "lancet",
                          ridges = TRUE,
-                         size = NULL,
+                         size = 15,
                          draw = TRUE){
   
 
@@ -52,7 +52,7 @@ ggScatRidges <- function(x,
       stop("The y vector to be plotted should contain only numeric values")
     }
     }else if(ncol(x) != 2){
-      stop("if 'x' is a tabular data, it should have two columns, first will be used as x axis and second columns will be used as the y axis.")
+      stop("if 'x' is a tabular data, it should have three columns, first will be used as x axis and second column will be used as the y axis. The third column will be used for grouping.")
     }else{
       y <- x[[2]]
       x <- x[[1]]
@@ -86,7 +86,7 @@ ggScatRidges <- function(x,
       ggtitle(title) +
       geom_density2d()
     
-    xdens <- suppressMessages({
+    xridges <- suppressMessages({
       axis_canvas(pmain, axis = "x") +
       geom_density_ridges(mapping = aes(x = x, y = group, fill = group),
                           alpha = 0.7, size = 0.2) +
@@ -94,7 +94,7 @@ ggScatRidges <- function(x,
       ggplot2::scale_y_discrete(expand = c(0, 0))
       })
     
-    ydens <- suppressMessages({
+    yridges <- suppressMessages({
       axis_canvas(pmain, axis = "y", coord_flip = TRUE)+
       geom_density_ridges(mapping = aes(x = y, y = group, fill = group),
                           alpha = 0.7, size = 0.2) +
@@ -103,8 +103,8 @@ ggScatRidges <- function(x,
       ggpubr::fill_palette(color)
     })
     
-    p1 <- cowplot::insert_xaxis_grob(pmain, xdens, grid::unit(.2, "null"), position = "top")
-    final <- cowplot::insert_yaxis_grob(p1, ydens, grid::unit(.2, "null"), position = "right")
+    p1 <- cowplot::insert_xaxis_grob(plot = main_plot, grob = xridges, height = grid::unit(.2, "null"), position = "top")
+    final <- cowplot::insert_yaxis_grob(plot = p1, grob = yridges, width = grid::unit(.2, "null"), position = "right")
 
   } else {
     final <- ggplot(mapping = aes(x = x, y = y, col = group)) +
@@ -118,10 +118,11 @@ ggScatRidges <- function(x,
       geom_density2d()
   }
   
-  return(invisible(final))
-  # if(draw){
-  #   cowplot::draw_plot(final)
-  # }
+  if(draw){
+    ggdraw(final)
+  }else{
+    return(invisible(final))
+  }
 }
 
 

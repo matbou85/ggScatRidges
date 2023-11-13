@@ -55,7 +55,7 @@ ylab <- paste0("PC2: ", round(eig.val[2,3] - eig.val[1,3], digits = 1), "% varia
   
 ggScatRidges(x = PC1, y = PC2, group= iris$Species, 
                     color = "lancet", ridges = T, title = "plot iris",
-                    xlab = xlab, ylab = ylab, size = 25, draw = T) 
+                    xlab = xlab, ylab = ylab, size = 15, draw = T) 
 
 ```
 

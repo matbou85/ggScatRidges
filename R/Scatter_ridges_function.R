@@ -133,10 +133,10 @@ ggScatRidges <- function(x,
   
   if(draw){
     cowplot::ggdraw(final)
+  }else{
+    return(invisible(final))
   }
-  return(invisible(final))
 }
-
 
 
 

@@ -15,15 +15,15 @@
 #' @param size The overall size of the text in the plot. Default = 15.
 #' @param draw If the user wants to directly draw the plot. Default = TRUE.
 #'
-#' @return A ggplot object.
+#' @return A ggplot object if draw set to 'TRUE' otherwise a grob table is returned but set to invisible.
 #' 
 #' @examples
 #' \dontrun{
 #' # The following example is based on the iris dataset:
 #'
 #' ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 
-#'                  color = "lancet", ridges = T, title = "plot iris",
-#'                  xlab = "Sepal.Length", ylab = "Sepal.Width", size = 15, draw = T) 
+#'              color = "lancet", ridges = T, title = "plot iris",
+#'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 15, draw = T) 
 #'}
 #'
 #' @import ggplot2
@@ -133,9 +133,8 @@ ggScatRidges <- function(x,
   
   if(draw){
     cowplot::ggdraw(final)
-  }else{
-    return(invisible(final))
   }
+  return(invisible(final))
 }
 
 

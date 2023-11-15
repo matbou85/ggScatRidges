@@ -116,8 +116,8 @@ ggScatRidges <- function(x,
       ggpubr::fill_palette(color)
     })
     
-    p1 <- cowplot::insert_xaxis_grob(plot = main_plot, grob = xridges, height = grid::unit(.2, "null"), position = "top")
-    final <- cowplot::insert_yaxis_grob(plot = p1, grob = yridges, width = grid::unit(.2, "null"), position = "right")
+    final <- cowplot::insert_xaxis_grob(plot = main_plot, grob = xridges, height = grid::unit(.2, "null"), position = "top") |>
+      cowplot::insert_yaxis_grob(grob = yridges, width = grid::unit(.2, "null"), position = "right")
 
   } else {
     final <- ggplot(mapping = aes(x = x, y = y, col = group)) +

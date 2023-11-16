@@ -55,7 +55,10 @@ ggScatRidges <- function(x,
   if(!inherits(x, c("data.frame", "matrix"))){
     # then your x is vector and you need to get y
     if(is.null(y)){
-      stop("provide y")
+      stop("Please provide y")
+    }
+    if(is.null(group)){
+      stop("Please provide group")
     }
     if(!inherits(x, c("double", "numeric"))){
       stop("The x vector to be plotted should contain only numeric values")
@@ -64,11 +67,11 @@ ggScatRidges <- function(x,
       stop("The y vector to be plotted should contain only numeric values")
     }
     }else if(ncol(x) != 2){
-      stop("if 'x' is a tabular data, it should have three columns, first will be used as x axis and the second column will be used as the y axis. The third column will be used for grouping.")
+      stop("if 'x' is a tabular data, it should have three columns, first will be used as x axis and the second column will be used as the y axis, and the third column will be used for grouping.")
     }else{
-      y <- x[[2]]
-      x <- x[[1]]
-      group <- x[[3]]
+      y <- 	x[[2]]
+      group <- 	x[[3]]
+      x <- 	x[[1]]
     }
   
     if(!inherits(x[[1]], c("double", "numeric"))){

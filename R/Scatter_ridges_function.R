@@ -36,7 +36,6 @@
 #' @export 
 
 
-# Main plot
 ggScatRidges <- function(x,
                          y = NULL,
                          xlab = NULL,
@@ -50,9 +49,9 @@ ggScatRidges <- function(x,
                          size = 15,
                          draw = TRUE){
   
-
+  
 # Check user input --------------------------------------------------------
-  if(!inherits(x, c("data.frame", "matrix"))){
+  if(!inherits(x, "data.frame")){
     # then your x is vector and you need to get y
     if(is.null(y)){
       stop("Please provide y")
@@ -66,8 +65,8 @@ ggScatRidges <- function(x,
     if(!inherits(y, c("double", "numeric"))){
       stop("The y vector to be plotted should contain only numeric values")
     }
-    }else if(ncol(x) != 2){
-      stop("if 'x' is a tabular data, it should have three columns, first will be used as x axis and the second column will be used as the y axis, and the third column will be used for grouping.")
+  }else if(ncol(x) != 3L){
+    stop("if 'x' is a tabular data, it should have three columns, first will be used as x axis and the second column will be used as the y axis, and the third column will be used for grouping.")
     }else{
       y <- 	x[[2]]
       group <- 	x[[3]]
@@ -89,6 +88,8 @@ ggScatRidges <- function(x,
   
 
 # Main --------------------------------------------------------------------
+
+# Scatter plot ------------------------------------------------------------
   if(ridges){
     main_plot <- ggplot(mapping = aes(x = x, y = y, col = group)) +
       geom_point() +
@@ -101,7 +102,8 @@ ggScatRidges <- function(x,
       scale_y_continuous(limits = ylim) +
       ggtitle(title) +
       geom_density2d()
-    
+
+# Add x axis ridges -------------------------------------------------------
     xridges <- suppressMessages({
       cowplot::axis_canvas(main_plot, axis = "x") +
       geom_density_ridges(mapping = aes(x = x, y = group, fill = group),
@@ -109,7 +111,8 @@ ggScatRidges <- function(x,
       ggpubr::fill_palette(color) +
       ggplot2::scale_y_discrete(expand = c(0, 0))
       })
-    
+
+# Add y axis ridges -------------------------------------------------------
     yridges <- suppressMessages({
       cowplot::axis_canvas(main_plot, axis = "y", coord_flip = TRUE)+
       geom_density_ridges(mapping = aes(x = y, y = group, fill = group),
@@ -118,10 +121,12 @@ ggScatRidges <- function(x,
       coord_flip() +
       ggpubr::fill_palette(color)
     })
-    
+
+# Combine all plots -------------------------------------------------------
     final <- cowplot::insert_xaxis_grob(plot = main_plot, grob = xridges, height = grid::unit(.2, "null"), position = "top") |>
       cowplot::insert_yaxis_grob(grob = yridges, width = grid::unit(.2, "null"), position = "right")
 
+# Scatter plot only if Ridges = F -----------------------------------------
   } else {
     final <- ggplot(mapping = aes(x = x, y = y, col = group)) +
       geom_point() +
@@ -133,15 +138,14 @@ ggScatRidges <- function(x,
       ggtitle(title) +
       geom_density2d()
   }
-  
+
+# Return objects ----------------------------------------------------------
   if(draw){
     cowplot::ggdraw(final)
   }else{
     return(invisible(final))
   }
 }
-
-
 
 
 

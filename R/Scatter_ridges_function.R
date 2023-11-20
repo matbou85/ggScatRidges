@@ -1,4 +1,4 @@
-#' Scatter plot combine with ridge lines
+#' Scatter Plot Combine with Ridgelines
 #'
 #' @description `ggScatRidges` is a simple function combining a scatter plot generated in 'ggplot2' to a ridgeline plot from 'ggridges' to visualise the disparities of the data points. This helps visualising the distribution of different groups in the data.
 #'
@@ -16,15 +16,20 @@
 #' @param draw If the user wants to directly draw the plot. Default = TRUE.
 #'
 #' @return A ggplot object if draw set to 'TRUE' otherwise a grob table is returned but set to invisible.
-#' 
+#'
 #' @examples
-#' \dontrun{
 #' # The following example is based on the iris dataset:
 #'
-#' ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 
+#' ## Example 1
+#' ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species,
+#'              color = "lancet", ridges = T, title = "plot iris",
+#'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 15, draw = T)
+#'
+#' ## Example 2
+#' iris2 <- iris[,c(1,2,5)] ## The first column will be used as 'x', the second as 'y' and the third as group for plotting.
+#' ggScatRidges(x = iris2, 
 #'              color = "lancet", ridges = T, title = "plot iris",
 #'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 15, draw = T) 
-#'}
 #'
 #' @import ggplot2
 #' @import ggpubr
@@ -33,7 +38,7 @@
 #' @import viridis
 #' @import hrbrthemes
 #'
-#' @export 
+#' @export
 
 
 ggScatRidges <- function(x,
@@ -49,35 +54,34 @@ ggScatRidges <- function(x,
                          size = 15,
                          draw = TRUE){
   
-  
-# Check user input --------------------------------------------------------
+
   if(!inherits(x, "data.frame")){
     # then your x is vector and you need to get y
     if(is.null(y)){
-      stop("Please provide y")
+      stop("Please provide 'y'")
     }
     if(is.null(group)){
-      stop("Please provide group")
+      stop("Please provide 'group'")
     }
     if(!inherits(x, c("double", "numeric"))){
-      stop("The x vector to be plotted should contain only numeric values")
+      stop("The 'x' vector to be plotted should only contain numeric values")
     }
     if(!inherits(y, c("double", "numeric"))){
-      stop("The y vector to be plotted should contain only numeric values")
+      stop("The 'y' vector to be plotted should only contain numeric values")
     }
-  }else if(ncol(x) != 3L){
-    stop("if 'x' is a tabular data, it should have three columns, first will be used as x axis and the second column will be used as the y axis, and the third column will be used for grouping.")
+    }else if(ncol(x) != 3L){
+      stop("if 'x' is a tabular data, it should have three columns, first will be used as 'x' axis and the second column will be used as the 'y' axis. The third column will be used for grouping.")
     }else{
-      y <- 	x[[2]]
-      group <- 	x[[3]]
-      x <- 	x[[1]]
+      y <-     x[[2]]
+      group <- x[[3]]
+      x <-     x[[1]]
     }
   
     if(!inherits(x[[1]], c("double", "numeric"))){
-      stop("The x column to be plotted should contain only numeric values")
+      stop("The 'x' column to be plotted should only contain numeric values")
     }
     if(!inherits(y, c("double", "numeric"))){
-      stop("The y column to be plotted should contain only numeric values")
+      stop("The 'y' column to be plotted should only contain numeric values")
     }
     if(length(x[[3]]) != length(x[[1]])){
       stop("The value of the 'group' argument should have the same length as value of 'x' argument.")
@@ -86,9 +90,6 @@ ggScatRidges <- function(x,
       stop("The value of the 'x' argument should have the same length as value of 'y' argument.")
     }
   
-
-# Main --------------------------------------------------------------------
-
 # Scatter plot ------------------------------------------------------------
   if(ridges){
     main_plot <- ggplot(mapping = aes(x = x, y = y, col = group)) +
@@ -105,21 +106,21 @@ ggScatRidges <- function(x,
 
 # Add x axis ridges -------------------------------------------------------
     xridges <- suppressMessages({
-      cowplot::axis_canvas(main_plot, axis = "x") +
+      axis_canvas(main_plot, axis = "x") +
       geom_density_ridges(mapping = aes(x = x, y = group, fill = group),
                           alpha = 0.7, size = 0.2) +
       ggpubr::fill_palette(color) +
       ggplot2::scale_y_discrete(expand = c(0, 0))
       })
 
-# Add y axis ridges -------------------------------------------------------
+# Add x axis ridges -------------------------------------------------------
     yridges <- suppressMessages({
-      cowplot::axis_canvas(main_plot, axis = "y", coord_flip = TRUE)+
+      axis_canvas(main_plot, axis = "y", coord_flip = TRUE)+
       geom_density_ridges(mapping = aes(x = y, y = group, fill = group),
                           alpha = 0.7, size = 0.2) +
+      ggpubr::fill_palette(color) +
       scale_y_discrete(expand = c(0, 0)) +
-      coord_flip() +
-      ggpubr::fill_palette(color)
+      coord_flip()
     })
 
 # Combine all plots -------------------------------------------------------
@@ -127,7 +128,7 @@ ggScatRidges <- function(x,
       cowplot::insert_yaxis_grob(grob = yridges, width = grid::unit(.2, "null"), position = "right")
 
 # Scatter plot only if Ridges = F -----------------------------------------
-  } else {
+  }else{
     final <- ggplot(mapping = aes(x = x, y = y, col = group)) +
       geom_point() +
       theme_minimal(base_size = size) +
@@ -141,13 +142,8 @@ ggScatRidges <- function(x,
 
 # Return objects ----------------------------------------------------------
   if(draw){
-    cowplot::ggdraw(final)
+    ggdraw(final)
   }else{
     return(invisible(final))
   }
 }
-
-
-
-
-

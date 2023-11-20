@@ -1,8 +1,8 @@
 Package: ggScatRidges
 Type: Package
-Title: Scatter plot combined with Ridgelines in 'ggplot2'
+Title: Scatter Plot Combined with Ridgelines in 'ggplot2'
 Version: 0.1.0
-Date: 2023-11-14
+Date: 2023-11-20
 Authors@R: person(given = "Matthieu", family = "Bourgery",
                     role = c("aut", "cre"),
                     email = "matthieu.bourgery@gmail.com",

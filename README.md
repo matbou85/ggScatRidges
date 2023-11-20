@@ -1,6 +1,6 @@
 
 
-# ggScatRidges: Scatter combined to Ridgeline plots in ggplot2
+# ggScatRidges: Scatter Plot Combined with Ridgelines in 'ggplot2'
 
 `ggScatRidges` is a simple function combining a scatter plot to a ridgeline plot to visualise the disparities of the data points. This helps visualising the distribution of different groups in the data.
 
@@ -50,7 +50,7 @@ ylab <- paste0("PC2: ", round(eig.val[2,3] - eig.val[1,3], digits = 1), "% varia
   
 ggScatRidges(x = PC1, y = PC2, group= iris$Species, 
              color = "lancet", ridges = T, title = "plot iris",
-             xlab = xlab, ylab = ylab, size = 15, draw = T) 
+             xlab = xlab, ylab = ylab, size = 15, draw = T)
 
 ```
 

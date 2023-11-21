@@ -8,16 +8,11 @@
 
 ## Installation
 
-<!-- remove this when released to CRAN
-
 Please install the stable release from CRAN:
 
 ``` r
 install.packages("ggScatRidges")
 ```
-
--->
-
 
 Alternatively, you can install the latest development version from github:
 

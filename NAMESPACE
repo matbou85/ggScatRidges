@@ -3,6 +3,7 @@
 export(ggScatRidges)
 import(ggplot2)
 import(ggpubr)
+import(ggrepel)
 import(ggridges)
 import(hrbrthemes)
 import(viridis)

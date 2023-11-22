@@ -26,16 +26,16 @@
 #'
 #' ## Example 1
 #' ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species,
-#'              color = "lancet", ridges = T, title = "plot iris",
-#'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 15, draw = T,
-#'              density_2d = T, label = FALSE)
+#'              color = "lancet", ridges = TRUE, title = "plot iris",
+#'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 15, draw = TRUE,
+#'              density_2d = TRUE, label = FALSE)
 #'
 #' ## Example 2
 #' iris2 <- iris[,c(1,2,5)] ## The first column will be used as 'x', the second as 'y' and the third as group for plotting.
 #' ggScatRidges(x = iris2, 
-#'              color = "lancet", ridges = T, title = "plot iris",
-#'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 15, draw = T,
-#'              density_2d = T, label = FALSE) 
+#'              color = "lancet", ridges = TRUE, title = "plot iris",
+#'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 15, draw = TRUE,
+#'              density_2d = TRUE, label = FALSE) 
 #'
 #' @import ggplot2
 #' @import ggpubr
@@ -43,6 +43,7 @@
 #' @import ggridges
 #' @import viridis
 #' @import hrbrthemes
+#' @import ggrepel
 #'
 #' @export
 
@@ -130,7 +131,7 @@ ggScatRidges <- function(x,
       main_plot <- main_plot + ggplot2::geom_density2d()}
     
     if(label){
-      main_plot <- main_plot + geom_text_repel(
+      main_plot <- main_plot + ggrepel::geom_text_repel(
         # data = subset(resdata, resdata$padj < 0.05 & abs(resdata$log2FoldChange) > 1.5),
         aes(label = text),
         max.overlaps = Inf,
@@ -178,7 +179,7 @@ ggScatRidges <- function(x,
       final <- final + ggplot2::geom_density2d()}
     
     if(label){
-      final <- final + geom_text_repel(
+      final <- final + ggrepel::geom_text_repel(
         # data = subset(resdata, resdata$padj < 0.05 & abs(resdata$log2FoldChange) > 1.5),
         aes(label = text),
         max.overlaps = Inf,

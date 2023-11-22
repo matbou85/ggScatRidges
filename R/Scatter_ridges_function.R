@@ -126,7 +126,6 @@ ggScatRidges <- function(x,
       geom_point(aes(shape = group), size = size) +
       xlab(xlab) +
       ylab(ylab) +
-      scale_shape_manual(values=pch)+
       theme_minimal(base_size = base_size) +
       theme(panel.border = element_rect(colour = "black", fill = NA, linewidth = 1)) +
       ggpubr::color_palette(color) +
@@ -147,6 +146,10 @@ ggScatRidges <- function(x,
     
     if(legend == FALSE){
       main_plot <- main_plot + theme(legend.position="none")
+    }
+    
+    if(!is.null(pch)){
+      main_plot <- main_plot + scale_shape_manual(values=pch)
     }
     
     # Add x axis ridges -------------------------------------------------------
@@ -178,7 +181,6 @@ ggScatRidges <- function(x,
       geom_point(aes(shape = group), size = 2) +
       xlab(xlab) +
       ylab(ylab) +
-      scale_shape_manual(values=pch)+
       theme_minimal(base_size = base_size) +
       theme(panel.border = element_rect(colour = "black", fill = NA, linewidth = 1)) +
       ggpubr::color_palette(color) +
@@ -195,6 +197,10 @@ ggScatRidges <- function(x,
         max.overlaps = Inf,
         size=6
       )
+    }
+    
+    if(!is.null(pch)){
+      final <- final + scale_shape_manual(values=pch)
     }
     
     if(legend == FALSE){

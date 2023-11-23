@@ -27,8 +27,8 @@ library(ggScatRidges)
     
 ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 
              color = "lancet", ridges = TRUE, title = "plot iris",
-             xlab = "Sepal.Length", ylab = "Sepal.Width", size = 15, draw = TRUE,
-             density_2d = TRUE, legend = TRUE, label = FALSE, text = NULL) 
+             xlab = "Sepal.Length", ylab = "Sepal.Width", base_size = 15, size = 2, 
+             draw = TRUE, density_2d = TRUE, legend = TRUE, label = FALSE, text = NULL) 
 ```
 
 ## Change parameters: remove legend, change points shape and size

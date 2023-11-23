@@ -79,7 +79,7 @@ iris2$name <- c(1:30) ## The fourth column is used for naming.
 
 ggScatRidges(x = iris2, 
              color = "lancet", ridges = TRUE, title = "plot iris",
-             xlab = xlab, ylab = ylab, size = 2, draw = TRUE,
+             xlab = "Sepal.Length", ylab = "Sepal.width", size = 2, draw = TRUE,
              density_2d = FALSE, legend = TRUE, label = TRUE)
 
 ```

@@ -71,9 +71,11 @@ ggScatRidges(x = PC1, y = PC2, group= iris$Species,
 
 ``` r
 library(ggScatRidges)
+library(dplyr)
 
 iris2 <- iris[,c(1,2,5)] ## The first column will be used as 'x', the second as 'y' and the third as group for plotting.
-iris2$name <- c(1:150) ## The fourth column is used for naming.
+iris2 <- iris2 %>% group_by(Species) %>% slice(1:10)
+iris2$name <- c(1:30) ## The fourth column is used for naming.
 
 ggScatRidges(x = iris2, 
              color = "lancet", ridges = TRUE, title = "plot iris",

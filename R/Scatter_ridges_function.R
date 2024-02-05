@@ -119,13 +119,10 @@ ggScatRidges <- function(x,
     if(missing(text) & length(text) != length(x)){
       stop("A vector must be provided to label the data points. The vector should have the same length as the 'x' vector")
     }
-<<<<<<< HEAD
   if(min(table(group)) <= 2L){
     warning("If the length of the vector is less than 3, the ridges will not be plotted.")
   }
-=======
->>>>>>> 2fa58ae69653a4a12035841f01b0c5eb022f125c
-  
+
   # Scatter plot ------------------------------------------------------------
   if(ridges){
     main_plot <- ggplot(mapping = aes(x = x, y = y, col = group)) +

@@ -120,7 +120,7 @@ ggScatRidges <- function(x,
       stop("A vector must be provided to label the data points. The vector should have the same length as the 'x' vector")
     }
   if(min(table(group)) <= 2L){
-    warning("If the length of the vector is less than 3, the ridges will not be plotted.")
+    warning("If the length of one of the group is less than 3, the ridges will not be plotted.")
   }
 
   # Scatter plot ------------------------------------------------------------

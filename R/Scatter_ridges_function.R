@@ -28,17 +28,17 @@
 #' # The following example is based on the iris dataset:
 #'
 #' ## Example 1
-#' ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species,
-#'              color = "lancet", ridges = TRUE, title = "plot iris",
-#'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 15, draw = TRUE,
-#'              density_2d = TRUE, label = FALSE)
+#' ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group = iris$Species,
+#'              color = "lancet", ridges = TRUE, title = "plot iris", legend.title = "Grouping",
+#'              xlab = "Sepal.Length", ylab = "Sepal.Width", base_size = 15, size = 2, 
+#'              draw = TRUE, density_2d = TRUE, legend = TRUE, label = FALSE, text = NULL)
 #'
 #' ## Example 2
 #' iris2 <- iris[,c(1,2,5)] ## The first column will be used as 'x', the second as 'y' and the third as group for plotting.
 #' ggScatRidges(x = iris2, 
 #'              color = "lancet", ridges = TRUE, title = "plot iris",
-#'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 15, draw = TRUE,
-#'              density_2d = TRUE, label = FALSE) 
+#'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 2, draw = TRUE,
+#'              density_2d = FALSE, legend = TRUE, label = TRUE) 
 #'
 #' @import ggplot2
 #' @import ggpubr
@@ -68,6 +68,7 @@ ggScatRidges <- function(x,
                          density_2d = TRUE,
                          legend = TRUE,
                          label = FALSE,
+                         legend.title = NULL,
                          text = NULL){
   
   # Check user input --------------------------------------------------------
@@ -122,7 +123,7 @@ ggScatRidges <- function(x,
   if(min(table(group)) <= 2L){
     warning("If the length of one of the group is less than 3, the ridges will not be plotted.")
   }
-
+  
   # Scatter plot ------------------------------------------------------------
   if(ridges){
     main_plot <- ggplot(mapping = aes(x = x, y = y, col = group)) +
@@ -134,6 +135,7 @@ ggScatRidges <- function(x,
       ggpubr::color_palette(color) +
       scale_x_continuous(limits = xlim) +
       scale_y_continuous(limits = ylim) +
+      labs(colour = legend.title, shape = legend.title) +
       ggtitle(title)
     
     if(density_2d){
@@ -190,6 +192,7 @@ ggScatRidges <- function(x,
       ggpubr::color_palette(color) +
       scale_x_continuous(limits = xlim) +
       scale_y_continuous(limits = ylim) +
+      labs(colour = legend.title, shape = legend.title) +
       ggtitle(title)
     
     if(density_2d){

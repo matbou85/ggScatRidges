@@ -4,7 +4,7 @@
 
 `ggScatRidges` is a simple function combining a scatter plot to a ridgeline plot to visualise the disparities of the data points. This helps visualising the distribution of different groups in the data.
 
-![An example of a plot that this package generates](misc/img/Rplot.png)
+![An example of a plot that this package generates](misc/img/Rplot_Basic.png)
 
 ## Installation
 
@@ -26,7 +26,7 @@ remotes::install_github("matbou85/ggScatRidges")
 library(ggScatRidges)
     
 ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 
-             color = "lancet", ridges = TRUE, title = "plot iris",
+             color = "lancet", ridges = TRUE, title = "plot iris", legend.title = "Grouping",
              xlab = "Sepal.Length", ylab = "Sepal.Width", base_size = 15, size = 2, 
              draw = TRUE, density_2d = TRUE, legend = TRUE, label = FALSE, text = NULL) 
 ```
@@ -42,7 +42,7 @@ ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species,
              density_2d = FALSE, legend = FALSE, label = FALSE, text = NULL, pch = c(10,12,14)) 
 ```
 
-![An example of a plot that this package generates](misc/img/Rplot_change.png)
+![An example of a plot that this package generates](misc/img/Rplot_change_config.png)
 
 
 ## PCA usage application
@@ -59,7 +59,7 @@ xlab <- paste0("PC1: ", round(eig.val[1,3], digits = 1), "% variance")
 ylab <- paste0("PC2: ", round(eig.val[2,3] - eig.val[1,3], digits = 1), "% variance")
   
 ggScatRidges(x = PC1, y = PC2, group= iris$Species, 
-             color = "lancet", ridges = TRUE, title = "plot iris",
+             color = "lancet", ridges = TRUE, title = "PCA iris",
              xlab = xlab, ylab = ylab, size = 2, draw = TRUE,
              density_2d = TRUE, legend = TRUE, label = FALSE, text = NULL)
 

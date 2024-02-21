@@ -18,6 +18,7 @@
 #' @param draw If the user wants to directly draw the plot. Default = TRUE.
 #' @param density_2d If the user wants to add density contours around group of points on the plot. Default = TRUE.
 #' @param legend If the user wants to add or remove the legend. Default = TRUE.
+#' @param legend.title The user can change the title of the legend if desired.
 #' @param label If the user wants to add custom labels for each point. Default = FALSE
 #' @param text The user can give a vector to add labels or directly provide it as a fourth column from a dataframe.
 #'
@@ -38,7 +39,7 @@
 #' ggScatRidges(x = iris2, 
 #'              color = "lancet", ridges = TRUE, title = "plot iris",
 #'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 2, draw = TRUE,
-#'              density_2d = FALSE, legend = TRUE, label = TRUE) 
+#'              density_2d = FALSE, legend = TRUE, label = FALSE) 
 #'
 #' @import ggplot2
 #' @import ggpubr
@@ -121,7 +122,7 @@ ggScatRidges <- function(x,
       stop("A vector must be provided to label the data points. The vector should have the same length as the 'x' vector")
     }
   if(min(table(group)) <= 2L){
-    warning("If the length of one of the group is less than 3, the ridges will not be plotted.")
+    warning("If the length of one or more of the group is less than 3, the ridges will not be plotted for the group(s).")
   }
   
   # Scatter plot ------------------------------------------------------------
@@ -184,7 +185,7 @@ ggScatRidges <- function(x,
     # Scatter plot only if Ridges = F -----------------------------------------
   }else{
     final <- ggplot(mapping = aes(x = x, y = y, col = group)) +
-      geom_point(aes(shape = group), size = 2) +
+      geom_point(aes(shape = group), size = size) +
       xlab(xlab) +
       ylab(ylab) +
       theme_minimal(base_size = base_size) +

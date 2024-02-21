@@ -1,24 +1,30 @@
+---
+title: "Scatter Plot Combined with Ridgelines in 'ggplot2'"
+author: "Matthieu Bourgery"
+output:
+  rmarkdown::html_vignette:
+    fig_width: 4.5
+    fig_height: 4
+vignette: >
+  %\VignetteIndexEntry{ggScatRidges}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-
-# ggScatRidges: Scatter Plot Combined with Ridgelines in 'ggplot2'
-
-`ggScatRidges` is a simple function combining a scatter plot to a ridgeline plot to visualise the disparities of the data points. This helps visualising the distribution of different groups in the data.
-
-![An example of a plot that this package generates](misc/img/Rplot_Basic.png)
-
-## Installation
-
-Please install the stable release from CRAN:
-
-``` r
-install.packages("ggScatRidges")
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 ```
 
-Alternatively, you can install the latest development version from github:
-
-``` r
-remotes::install_github("matbou85/ggScatRidges")
+```{r setup}
+library(ggScatRidges)
 ```
+
+## Description
+
+The function combines a scatter plot with ridgelines to better visualise the distribution between sample groups. The plot is created with 'ggplot2'.
 
 ## Basic usage
 
@@ -42,9 +48,6 @@ ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species,
              density_2d = FALSE, legend = FALSE, label = FALSE, text = NULL, pch = c(10,12,14)) 
 ```
 
-![An example of a plot that this package generates](misc/img/Rplot_change_config.png)
-
-
 ## PCA usage application
 
 ``` r
@@ -62,10 +65,7 @@ ggScatRidges(x = PC1, y = PC2, group= iris$Species,
              color = "lancet", ridges = TRUE, title = "PCA iris",
              xlab = xlab, ylab = ylab, size = 2, draw = TRUE,
              density_2d = TRUE, legend = TRUE, label = FALSE, text = NULL)
-
 ```
-
-![An example of a plot that this package generates](misc/img/Rplot_PCA.png)
 
 ## Plot from dataframe
 
@@ -81,15 +81,4 @@ ggScatRidges(x = iris2,
              color = "lancet", ridges = TRUE, title = "plot iris",
              xlab = "Sepal.Length", ylab = "Sepal.width", size = 2, draw = TRUE,
              density_2d = FALSE, legend = TRUE, label = FALSE)
-
 ```
-
-![An example of a plot that this package generates](misc/img/Rplot_df.png)
-
-
-This function is loosely inspired by one of the plots in [a post](http://www.sthda.com/english/articles/24-ggpubr-publication-ready-plots/78-perfect-scatter-plots-with-correlation-and-marginal-histograms/) by [Alboukadel Kassambara](http://www.sthda.com/english/user/profile/1) from 2017.
-
-
-
-
-

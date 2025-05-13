@@ -202,7 +202,7 @@ ggScatRidges <- function(x,
         geom_density_ridges(mapping = aes(x = x, y = group, fill = group),
                             alpha = 0.7) +
         ggpubr::fill_palette(color) +
-        ggplot2::scale_y_discrete(expand = c(0, 0))
+        scale_y_discrete(expand = expansion(mult = c(0, 1)))
     })
     
     # Add y axis ridges -------------------------------------------------------
@@ -211,7 +211,7 @@ ggScatRidges <- function(x,
         geom_density_ridges(mapping = aes(x = y, y = group, fill = group),
                             alpha = 0.7) +
         ggpubr::fill_palette(color) +
-        scale_y_discrete(expand = c(0, 0)) +
+        scale_y_discrete(expand = expansion(mult = c(0, 1))) +
         coord_flip()
     })
     

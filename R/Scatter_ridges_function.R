@@ -193,8 +193,6 @@ ggScatRidges <- function(x,
                                           color = "black", 
                                           size = anno_size)
         
-      }else{
-        warning("Please check the spelling of the text you gave for 'anno_pos' argument, only 'Up' and 'Bottom' are accepted.")
       }
     }
     
@@ -281,16 +279,13 @@ ggScatRidges <- function(x,
                                                  format(signif(test_stats$`Pr(>F)`[[1]], digits = 2), nsmall = 2)),
                                   color = "black", 
                                   size = anno_size)
-      }else{
-        warning("Please check the spelling of the text you gave for 'anno_pos' argument, only 'Up' and 'Bottom' are accepted.")
       }
     }
-    
-    # Return objects ----------------------------------------------------------
-    if(draw){
-      cowplot::ggdraw(final)
-    }else{
-      return(invisible(final))
-    }
+  }  
+  # Return objects ----------------------------------------------------------
+  if(draw){
+    cowplot::ggdraw(final)
+  }else{
+    return(invisible(final))
   }
 }

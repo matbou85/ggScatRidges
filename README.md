@@ -45,6 +45,21 @@ ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species,
 ![An example of a plot that this package generates](misc/img/Rplot_change_config.png)
 
 
+## Add stats
+
+```r
+library(ggScatRidges)
+
+ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 
+             color = "lancet", ridges = TRUE, title = "plot iris",
+             xlab = "Sepal.Length", ylab = "Sepal.Width", base_size = 15, size = 3, draw = TRUE,
+             density_2d = FALSE, legend = FALSE, label = FALSE, text = NULL, pch = c(10,12,14),
+             stats = TRUE, stats_method = "eu", anno_size = 6, anno_pos = "Up") 
+```
+
+![An example of a plot that this package generates](misc/img/Rplot_stats_add.png)
+
+
 ## PCA usage application
 
 ``` r

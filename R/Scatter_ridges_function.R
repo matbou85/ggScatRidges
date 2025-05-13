@@ -19,8 +19,9 @@
 #' @param density_2d If the user wants to add density contours around group of points on the plot. Default = TRUE.
 #' @param legend If the user wants to add or remove the legend. Default = TRUE.
 #' @param label If the user wants to add custom labels for each point. Default = FALSE.
+#' @param legend.title The user can provide its own title.
 #' @param stats If the user wants to add a permanova statistical test. Default = FALSE.
-#' @param stats_method The name of any method used in vegdist to calculate pairwise distances. Default = "eu.
+#' @param stats_method The user can choose the method from `vegan::vegdist` to calculate pairwise distances. Default = "eu.
 #' @param anno_size To set the font size of the statistical test results. Default = 6.
 #' @param anno_pos To define where the statistical test results will be displayed on the graph. Default = "Up".
 #' @param text The user can give a vector to add labels or directly provide it as a fourth column from a dataframe.
@@ -35,14 +36,15 @@
 #' ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group = iris$Species,
 #'              color = "lancet", ridges = TRUE, title = "plot iris", legend.title = "Grouping",
 #'              xlab = "Sepal.Length", ylab = "Sepal.Width", base_size = 15, size = 2, 
-#'              draw = TRUE, density_2d = TRUE, legend = TRUE, label = FALSE, text = NULL)
+#'              draw = TRUE, density_2d = TRUE, legend = TRUE, label = FALSE, text = NULL,
+#'              stats = FALSE)
 #'
 #' ## Example 2
-#' iris2 <- iris[,c(1,2,5)] ## The first column will be used as 'x', the second as 'y' and the third as group for plotting.
+#' iris2 <- iris[,c(1,2,5)] #The 1st column will be used as 'x', the 2nd as 'y', and the 3rd as group.
 #' ggScatRidges(x = iris2, 
 #'              color = "lancet", ridges = TRUE, title = "plot iris",
 #'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 2, draw = TRUE,
-#'              density_2d = FALSE, legend = TRUE, label = TRUE) 
+#'              density_2d = FALSE, legend = TRUE, label = FALSE, stats = TRUE) 
 #'
 #' @import ggplot2
 #' @import ggpubr

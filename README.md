@@ -24,7 +24,7 @@ remotes::install_github("matbou85/ggScatRidges")
 
 ``` r
 library(ggScatRidges)
-    
+
 ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 
              color = "lancet", ridges = TRUE, title = "plot iris", legend.title = "Grouping",
              xlab = "Sepal.Length", ylab = "Sepal.Width", base_size = 15, size = 2, 

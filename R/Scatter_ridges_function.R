@@ -13,13 +13,16 @@
 #' @param color The user can choose from `ggpubr::get_palette`. Default = "lancet".
 #' @param ridges The user can choose to plot, or not, the ridgelines. Default = TRUE.
 #' @param base_size The overall size of the text in the plot. Default = 15.
-#' @param size The size of the dots in the plot. Default = 3
+#' @param size The size of the dots in the plot. Default = 3.
 #' @param pch The user can change the shape of the points by providing a vector length equal to the number of groups.
 #' @param draw If the user wants to directly draw the plot. Default = TRUE.
 #' @param density_2d If the user wants to add density contours around group of points on the plot. Default = TRUE.
 #' @param legend If the user wants to add or remove the legend. Default = TRUE.
-#' @param legend.title The user can change the title of the legend if desired.
-#' @param label If the user wants to add custom labels for each point. Default = FALSE
+#' @param label If the user wants to add custom labels for each point. Default = FALSE.
+#' @param stats If the user wants to add a permanova statistical test. Default = FALSE.
+#' @param stats_method The name of any method used in vegdist to calculate pairwise distances. Default = "eu.
+#' @param anno_size To set the font size of the statistical test results. Default = 6.
+#' @param anno_pos To define where the statistical test results will be displayed on the graph. Default = "Up".
 #' @param text The user can give a vector to add labels or directly provide it as a fourth column from a dataframe.
 #'
 #'
@@ -39,7 +42,7 @@
 #' ggScatRidges(x = iris2, 
 #'              color = "lancet", ridges = TRUE, title = "plot iris",
 #'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 2, draw = TRUE,
-#'              density_2d = FALSE, legend = TRUE, label = FALSE) 
+#'              density_2d = FALSE, legend = TRUE, label = TRUE) 
 #'
 #' @import ggplot2
 #' @import ggpubr
@@ -48,6 +51,7 @@
 #' @import viridis
 #' @import hrbrthemes
 #' @import ggrepel
+#' @import vegan
 #'
 #' @export
 
@@ -70,6 +74,10 @@ ggScatRidges <- function(x,
                          legend = TRUE,
                          label = FALSE,
                          legend.title = NULL,
+                         stats = FALSE,
+                         stats_method = "eu",
+                         anno_size = 6,
+                         anno_pos = "Up",
                          text = NULL){
   
   # Check user input --------------------------------------------------------
@@ -122,7 +130,7 @@ ggScatRidges <- function(x,
       stop("A vector must be provided to label the data points. The vector should have the same length as the 'x' vector")
     }
   if(min(table(group)) <= 2L){
-    warning("If the length of one or more of the group is less than 3, the ridges will not be plotted for the group(s).")
+    warning("If the length of one of the group is less than 3, the ridges will not be plotted for this group.")
   }
   
   # Scatter plot ------------------------------------------------------------
@@ -159,20 +167,51 @@ ggScatRidges <- function(x,
       main_plot <- main_plot + scale_shape_manual(values=pch)
     }
     
+    if(stats){
+      tmp <- data.frame()
+      tmp <- cbind(x, y)
+      test_stats <- adonis2(tmp ~ group, method = stats_method)
+      
+      if(anno_pos == "Up"){
+        main_plot <- main_plot + annotate(geom = "text", 
+                                          x = -Inf, y = Inf, 
+                                          hjust = 0, vjust = 1.5,
+                                          label = paste0("PERMANOVA test: F = ", 
+                                                         format(signif(test_stats$F[[1]], digits = 2), nsmall = 2), ", P = ", 
+                                                         format(signif(test_stats$`Pr(>F)`[[1]], digits = 2), nsmall = 2)),
+                                          color = "black", 
+                                          size = anno_size)
+      } 
+      
+      if(anno_pos == "Bottom"){
+        main_plot <- main_plot + annotate(geom = "text", 
+                                          x = -Inf, y = -Inf, 
+                                          hjust = 0, vjust = -1.5,
+                                          label = paste0("PERMANOVA test: F = ", 
+                                                         format(signif(test_stats$F[[1]], digits = 2), nsmall = 2), ", P = ", 
+                                                         format(signif(test_stats$`Pr(>F)`[[1]], digits = 2), nsmall = 2)),
+                                          color = "black", 
+                                          size = anno_size)
+        
+      }else{
+        warning("Please check the spelling of the text you gave for 'anno_pos' argument, only 'Up' and 'Bottom' are accepted.")
+      }
+    }
+    
     # Add x axis ridges -------------------------------------------------------
     xridges <- suppressMessages({
       cowplot::axis_canvas(main_plot, axis = "x") +
         geom_density_ridges(mapping = aes(x = x, y = group, fill = group),
-                            alpha = 0.7, size = 0.2) +
+                            alpha = 0.7) +
         ggpubr::fill_palette(color) +
         ggplot2::scale_y_discrete(expand = c(0, 0))
     })
     
-    # Add x axis ridges -------------------------------------------------------
+    # Add y axis ridges -------------------------------------------------------
     yridges <- suppressMessages({
       cowplot::axis_canvas(main_plot, axis = "y", coord_flip = TRUE)+
         geom_density_ridges(mapping = aes(x = y, y = group, fill = group),
-                            alpha = 0.7, size = 0.2) +
+                            alpha = 0.7) +
         ggpubr::fill_palette(color) +
         scale_y_discrete(expand = c(0, 0)) +
         coord_flip()
@@ -181,6 +220,7 @@ ggScatRidges <- function(x,
     # Combine all plots -------------------------------------------------------
     final <- cowplot::insert_xaxis_grob(plot = main_plot, grob = xridges, height = grid::unit(.2, "null"), position = "top") |>
       cowplot::insert_yaxis_grob(grob = yridges, width = grid::unit(.2, "null"), position = "right")
+    
     
     # Scatter plot only if Ridges = F -----------------------------------------
   }else{
@@ -215,12 +255,42 @@ ggScatRidges <- function(x,
     if(legend == FALSE){
       final <- final + theme(legend.position="none")
     }
-  }
-  
-  # Return objects ----------------------------------------------------------
-  if(draw){
-    cowplot::ggdraw(final)
-  }else{
-    return(invisible(final))
+    
+    if(stats){
+      tmp <- data.frame()
+      tmp <- cbind(x, y)
+      test_stats <- adonis2(tmp ~ group, method = stats_method)
+      
+      if(anno_pos == "Up"){
+        final <- final + annotate(geom = "text", 
+                                  x = -Inf, y = Inf, 
+                                  hjust = 0, vjust = 1.5,
+                                  label = paste0("PERMANOVA test: F = ", 
+                                                 format(signif(test_stats$F[[1]], digits = 2), nsmall = 2), ", P = ", 
+                                                 format(signif(test_stats$`Pr(>F)`[[1]], digits = 2), nsmall = 2)),
+                                  color = "black", 
+                                  size = anno_size)
+      }
+      
+      if(anno_pos == "Bottom"){
+        final <- final + annotate(geom = "text", 
+                                  x = -Inf, y = -Inf, 
+                                  hjust = 0, vjust = -1.5,
+                                  label = paste0("PERMANOVA test: F = ", 
+                                                 format(signif(test_stats$F[[1]], digits = 2), nsmall = 2), ", P = ", 
+                                                 format(signif(test_stats$`Pr(>F)`[[1]], digits = 2), nsmall = 2)),
+                                  color = "black", 
+                                  size = anno_size)
+      }else{
+        warning("Please check the spelling of the text you gave for 'anno_pos' argument, only 'Up' and 'Bottom' are accepted.")
+      }
+    }
+    
+    # Return objects ----------------------------------------------------------
+    if(draw){
+      cowplot::ggdraw(final)
+    }else{
+      return(invisible(final))
+    }
   }
 }

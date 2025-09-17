@@ -26,7 +26,7 @@ remotes::install_github("matbou85/ggScatRidges")
 library(ggScatRidges)
 
 ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 
-             color = "lancet", ridges = TRUE, title = "plot iris", legend.title = "Grouping",
+             color = "Set1", ridges = TRUE, title = "plot iris", legend.title = "Grouping",
              xlab = "Sepal.Length", ylab = "Sepal.Width", base_size = 15, size = 2, 
              draw = TRUE, density_2d = TRUE, legend = TRUE, label = FALSE, text = NULL) 
 ```
@@ -37,7 +37,7 @@ ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species,
 library(ggScatRidges)
 
 ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 
-             color = "lancet", ridges = TRUE, title = "plot iris",
+             color = "Set2", ridges = TRUE, title = "plot iris",
              xlab = "Sepal.Length", ylab = "Sepal.Width", base_size = 15, size = 3, draw = TRUE,
              density_2d = FALSE, legend = FALSE, label = FALSE, text = NULL, pch = c(10,12,14)) 
 ```
@@ -51,7 +51,7 @@ ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species,
 library(ggScatRidges)
 
 ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group= iris$Species, 
-             color = "lancet", ridges = TRUE, title = "plot iris",
+             color = "Set3", ridges = TRUE, title = "plot iris",
              xlab = "Sepal.Length", ylab = "Sepal.Width", base_size = 15, size = 3, draw = TRUE,
              density_2d = FALSE, legend = FALSE, label = FALSE, text = NULL, pch = c(10,12,14),
              stats = TRUE, stats_method = "eu", anno_size = 6, anno_pos = "Up") 
@@ -74,7 +74,7 @@ xlab <- paste0("PC1: ", round(eig.val[1,3], digits = 1), "% variance")
 ylab <- paste0("PC2: ", round(eig.val[2,3] - eig.val[1,3], digits = 1), "% variance")
   
 ggScatRidges(x = PC1, y = PC2, group= iris$Species, 
-             color = "lancet", ridges = TRUE, title = "PCA iris",
+             color = "Pastel1", ridges = TRUE, title = "PCA iris",
              xlab = xlab, ylab = ylab, size = 2, draw = TRUE,
              density_2d = TRUE, legend = TRUE, label = FALSE, text = NULL)
 
@@ -93,7 +93,7 @@ iris2 <- iris2 %>% group_by(Species) %>% slice(1:10)
 iris2$name <- c(1:30) ## The fourth column is used for naming.
 
 ggScatRidges(x = iris2, 
-             color = "lancet", ridges = TRUE, title = "plot iris",
+             color = "Pastel2", ridges = TRUE, title = "plot iris",
              xlab = "Sepal.Length", ylab = "Sepal.width", size = 2, draw = TRUE,
              density_2d = FALSE, legend = TRUE, label = TRUE)
 

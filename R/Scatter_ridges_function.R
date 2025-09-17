@@ -10,7 +10,7 @@
 #' @param xlim To set scale limits on the xaxis.
 #' @param ylim To set scale limits on the yaxis.
 #' @param group The user should provide here the grouping of the rows if a dataframe was provided, otherwise a vector.
-#' @param color The user can choose from `ggpubr::get_palette`. Default = "lancet".
+#' @param color The user can choose from `display.brewer.all()`. Default = "Set1".
 #' @param ridges The user can choose to plot, or not, the ridgelines. Default = TRUE.
 #' @param base_size The overall size of the text in the plot. Default = 15.
 #' @param size The size of the dots in the plot. Default = 3.
@@ -34,7 +34,7 @@
 #'
 #' ## Example 1
 #' ggScatRidges(x = iris$Sepal.Length, y = iris$Sepal.Width, group = iris$Species,
-#'              color = "lancet", ridges = TRUE, title = "plot iris", legend.title = "Grouping",
+#'              color = "Set3", ridges = TRUE, title = "plot iris", legend.title = "Grouping",
 #'              xlab = "Sepal.Length", ylab = "Sepal.Width", base_size = 15, size = 2, 
 #'              draw = TRUE, density_2d = TRUE, legend = TRUE, label = FALSE, text = NULL,
 #'              stats = FALSE)
@@ -42,18 +42,16 @@
 #' ## Example 2
 #' iris2 <- iris[,c(1,2,5)] #The 1st column will be used as 'x', the 2nd as 'y', and the 3rd as group.
 #' ggScatRidges(x = iris2, 
-#'              color = "lancet", ridges = TRUE, title = "plot iris",
+#'              color = "Set2", ridges = TRUE, title = "plot iris",
 #'              xlab = "Sepal.Length", ylab = "Sepal.Width", size = 2, draw = TRUE,
 #'              density_2d = FALSE, legend = TRUE, label = FALSE, stats = TRUE) 
 #'
 #' @import ggplot2
-#' @import ggpubr
 #' @importFrom cowplot axis_canvas insert_xaxis_grob insert_yaxis_grob ggdraw
 #' @import ggridges
-#' @import viridis
-#' @import hrbrthemes
 #' @import ggrepel
 #' @import vegan
+#' @import RColorBrewer
 #'
 #' @export
 
@@ -66,7 +64,7 @@ ggScatRidges <- function(x,
                          xlim = NULL,
                          ylim = NULL,
                          group = NULL,
-                         color = "lancet",
+                         color = "Set1",
                          ridges = TRUE,
                          base_size = 15,
                          size = 2,
@@ -143,7 +141,7 @@ ggScatRidges <- function(x,
       ylab(ylab) +
       theme_minimal(base_size = base_size) +
       theme(panel.border = element_rect(colour = "black", fill = NA, linewidth = 1)) +
-      ggpubr::color_palette(color) +
+      ggplot2::scale_color_brewer(palette = color) +
       scale_x_continuous(limits = xlim) +
       scale_y_continuous(limits = ylim) +
       labs(colour = legend.title, shape = legend.title) +
@@ -203,7 +201,7 @@ ggScatRidges <- function(x,
       cowplot::axis_canvas(main_plot, axis = "x") +
         geom_density_ridges(mapping = aes(x = x, y = group, fill = group),
                             alpha = 0.7) +
-        ggpubr::fill_palette(color) +
+        ggplot2::scale_fill_brewer(palette = color) +
         scale_y_discrete(expand = expansion(mult = c(0, 1)))
     })
     
@@ -212,7 +210,7 @@ ggScatRidges <- function(x,
       cowplot::axis_canvas(main_plot, axis = "y", coord_flip = TRUE)+
         geom_density_ridges(mapping = aes(x = y, y = group, fill = group),
                             alpha = 0.7) +
-        ggpubr::fill_palette(color) +
+        ggplot2::scale_fill_brewer(palette = color) +
         scale_y_discrete(expand = expansion(mult = c(0, 1))) +
         coord_flip()
     })
@@ -230,7 +228,7 @@ ggScatRidges <- function(x,
       ylab(ylab) +
       theme_minimal(base_size = base_size) +
       theme(panel.border = element_rect(colour = "black", fill = NA, linewidth = 1)) +
-      ggpubr::color_palette(color) +
+      ggplot2::scale_color_brewer(palette = color) +
       scale_x_continuous(limits = xlim) +
       scale_y_continuous(limits = ylim) +
       labs(colour = legend.title, shape = legend.title) +

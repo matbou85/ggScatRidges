@@ -1,14 +1,14 @@
 Package: ggScatRidges
 Type: Package
 Title: Scatter Plot Combined with Ridgelines in 'ggplot2'
-Version: 0.1.2
-Date: 2025-05-13
+Version: 1.1.0
+Date: 2025-09-17
 Authors@R: person(given = "Matthieu", family = "Bourgery",
                     role = c("aut", "cre"),
                     email = "matthieu.bourgery@gmail.com",
                     comment = c(ORCID = "0000-0001-9156-2807"))
 Maintainer: Matthieu Bourgery <matthieu.bourgery@gmail.com>
-Imports: ggplot2, cowplot, ggpubr, ggridges, viridis, hrbrthemes, ggrepel, vegan
+Imports: ggplot2, cowplot, ggridges, ggrepel, vegan, RColorBrewer
 Description: The function combines a scatter plot with ridgelines to better visualise the distribution between sample groups. The plot is created with 'ggplot2'.
 License: GPL-3
 URL: https://github.com/matbou85/ggScatRidges,
